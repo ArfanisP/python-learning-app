@@ -3,6 +3,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 
 const userRoutes = require("./routes/userRoutes");
+const lessonRoutes = require("./routes/lessonRoutes");
 
 const connectDB = require("./config/database");
 
@@ -15,6 +16,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/api/users", userRoutes);
+app.use("/api/lessons", lessonRoutes);
 
 app.get("/", (req, res) => {
   res.send("Python Learning API Running");
