@@ -157,6 +157,44 @@ body {
   box-shadow: 0 24px 55px rgba(15, 23, 42, 0.12);
 }
 
+.learning-section {
+  margin-top: 40px;
+}
+
+.learning-section:first-of-type {
+  margin-top: 0;
+}
+
+.pdf-viewer {
+  overflow: hidden;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: 8px;
+  box-shadow: var(--app-shadow);
+}
+
+.pdf-viewer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--app-border);
+}
+
+.pdf-viewer-header h3 {
+  margin: 4px 0 0;
+  font-size: 1.15rem;
+}
+
+.pdf-viewer iframe {
+  width: 100%;
+  height: min(72svh, 760px);
+  display: block;
+  background: #f8fafc;
+  border: 0;
+}
+
 .quiz-stack {
   display: grid;
   gap: 18px;
@@ -249,5 +287,14 @@ body {
 
   .profile-grid {
     grid-template-columns: 1fr;
+  }
+
+  .pdf-viewer-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .pdf-viewer iframe {
+    height: 65svh;
   }
 }

@@ -55,8 +55,22 @@ function AppContent() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/lessons" element={<Lessons />} />
-          <Route path="/quiz/:lessonId" element={<Quiz />} />
+          <Route
+            path="/lessons"
+            element={
+              <ProtectedRoute redirectTo="/">
+                <Lessons />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/quiz/:lessonId"
+            element={
+              <ProtectedRoute redirectTo="/">
+                <Quiz />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/profile"
             element={

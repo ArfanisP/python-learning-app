@@ -72,15 +72,18 @@ function Quiz() {
         : 0;
 
     try {
-      await saveProgress(
+      const progress = await saveProgress(
         lessonId,
         finalScore,
         true
       );
 
-      alert(
-        `Quiz completed! Score: ${finalScore}`
-      );
+      const scoreMessage =
+        progress.isBestScore
+          ? `Quiz completed! New best score: ${finalScore}`
+          : `Quiz completed! Score: ${finalScore}. Your best score is still ${progress.score}`;
+
+      alert(scoreMessage);
 
       navigate("/profile");
     } catch (error) {

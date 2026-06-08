@@ -17,6 +17,11 @@ const lessonSchema = new mongoose.Schema(
       required: true,
     },
 
+    pdfUrl: {
+      type: String,
+      default: "",
+    },
+
     difficulty: {
       type: String,
       enum: ["Beginner", "Intermediate", "Advanced"],
