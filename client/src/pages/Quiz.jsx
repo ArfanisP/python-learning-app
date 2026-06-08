@@ -90,41 +90,56 @@ function Quiz() {
 
   return (
     <div>
-      <h1>Quiz</h1>
+      <div className="page-heading">
+        <span className="eyebrow">Knowledge check</span>
+        <h1>Quiz</h1>
+        <p className="text-secondary">
+          Choose the best answer for each question, then submit your score.
+        </p>
+      </div>
 
-      {questions.map((q) => (
-        <div
-          key={q._id}
-          style={{
-            border:
-              "1px solid gray",
-            padding: "10px",
-            margin: "10px",
-          }}
-        >
-          <h3>{q.question}</h3>
+      <div className="quiz-stack">
+        {questions.map((q, index) => (
+          <section className="card quiz-card" key={q._id}>
+            <div className="card-body">
+              <div className="d-flex align-items-start gap-3 mb-3">
+                <span className="question-number">{index + 1}</span>
+                <h2 className="h4 mb-0">{q.question}</h2>
+              </div>
 
-          {q.options.map(
-            (option) => (
-              <div key={option}>
+              <div className="answer-grid">
+                {q.options.map((option) => {
+                  const selected = answers[q._id] === option;
+
+                  return (
                 <button
-                  onClick={() =>
-                    selectAnswer(
-                      q._id,
-                      option
-                    )
-                  }
+                      className={`answer-option ${selected ? "selected" : ""}`}
+                      key={option}
+                      onClick={() => selectAnswer(q._id, option)}
+                      type="button"
                 >
                   {option}
                 </button>
+                  );
+                })}
               </div>
-            )
-          )}
+            </div>
+          </section>
+        ))}
+      </div>
+
+      {questions.length === 0 && (
+        <div className="empty-state">
+          <h2>No quiz questions found</h2>
+          <p className="text-secondary">
+            Questions will appear here once this lesson has a quiz.
+          </p>
         </div>
-      ))}
+      )}
 
       {questions.length > 0 && (
         <button
+          className="btn btn-primary btn-lg mt-4"
           onClick={submitQuiz}
         >
           Submit Quiz

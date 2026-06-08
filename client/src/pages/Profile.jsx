@@ -33,7 +33,11 @@ function Profile() {
   };
 
   if (!user) {
-    return <h1>No user logged in</h1>;
+    return (
+      <div className="empty-state">
+        <h1>No user logged in</h1>
+      </div>
+    );
   }
 
   const completedLessons =
@@ -53,72 +57,89 @@ function Profile() {
 
   return (
     <div>
-      <h1>Profile</h1>
+      <div className="page-heading">
+        <span className="eyebrow">Your dashboard</span>
+        <h1>Profile</h1>
+      </div>
 
-      <p>
-        Username: {user.username}
-      </p>
+      <div className="profile-grid">
+        <section className="card profile-card">
+          <div className="card-body">
+            <h2 className="h4">Account</h2>
+            <p className="mb-1">
+              <strong>Username:</strong> {user.username}
+            </p>
+            <p className="mb-0">
+              <strong>Email:</strong> {user.email}
+            </p>
+          </div>
+        </section>
 
-      <p>
-        Email: {user.email}
-      </p>
+        <section className="card profile-card">
+          <div className="card-body">
+            <h2 className="h4">Statistics</h2>
+            <div className="stat-row">
+              <span>Completed Lessons</span>
+              <strong>{completedLessons}</strong>
+            </div>
+            <div className="stat-row">
+              <span>Average Score</span>
+              <strong>{averageScore}</strong>
+            </div>
+          </div>
+        </section>
+      </div>
 
-      <hr />
+      <div className="section-heading">
+        <h2>Lesson Progress</h2>
+      </div>
 
-      <h2>Statistics</h2>
+      <div className="row g-4">
+        {progress.map((item) => (
+          <div className="col-md-6" key={item._id}>
+            <article className="card progress-card h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between gap-3 align-items-start mb-3">
+                  <h3 className="h5 mb-0">
+                    {item.lessonId?.title}
+                  </h3>
+                  <span
+                    className={`badge ${
+                      item.completed ? "text-bg-success" : "text-bg-secondary"
+                    }`}
+                  >
+                    {item.completed ? "Complete" : "In progress"}
+                  </span>
+                </div>
 
-      <p>
-        Completed Lessons:
-        {" "}
-        {completedLessons}
-      </p>
+                <p className="text-secondary mb-2">
+                  Category: {item.lessonId?.category}
+                </p>
 
-      <p>
-        Average Score:
-        {" "}
-        {averageScore}
-      </p>
+                <div className="progress" role="progressbar" aria-valuenow={item.score} aria-valuemin="0" aria-valuemax="100">
+                  <div
+                    className="progress-bar"
+                    style={{ width: `${item.score}%` }}
+                  >
+                    {item.score}
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        ))}
+      </div>
 
-      <hr />
-
-      <h2>Lesson Progress</h2>
-
-      {progress.map((item) => (
-        <div
-          key={item._id}
-          style={{
-            border: "1px solid gray",
-            padding: "10px",
-            margin: "10px 0",
-          }}
-        >
-          <h3>
-            {item.lessonId?.title}
-          </h3>
-
-          <p>
-            Category:
-            {" "}
-            {item.lessonId?.category}
-          </p>
-
-          <p>
-            Score:
-            {" "}
-            {item.score}
-          </p>
-
-          <p>
-            Completed:
-            {" "}
-            {item.completed
-              ? "Yes"
-              : "No"}
+      {progress.length === 0 && (
+        <div className="empty-state">
+          <h2>No progress yet</h2>
+          <p className="text-secondary">
+            Complete a quiz to see your lesson history here.
           </p>
         </div>
-      ))}
+      )}
 
-      <button onClick={logout}>
+      <button className="btn btn-outline-danger mt-4" onClick={logout}>
         Logout
       </button>
     </div>
