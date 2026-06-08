@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 function Lessons() {
   const [lessons, setLessons] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchLessons = async () => {
@@ -35,6 +37,15 @@ function Lessons() {
           <p>{lesson.description}</p>
 
           <strong>{lesson.difficulty}</strong>
+          <div style={{ marginTop: "10px" }}>
+            <button
+              onClick={() =>
+                navigate(`/quiz/${lesson._id}`)
+              }
+            >
+              Start Quiz
+            </button>
+          </div>
         </div>
       ))}
     </div>
