@@ -15,6 +15,16 @@ const getPdfUrl = (lesson) => {
   return "";
 };
 
+const getAbsolutePdfUrl = (lesson) => {
+  const pdfUrl = getPdfUrl(lesson);
+
+  if (!pdfUrl) {
+    return "";
+  }
+
+  return new URL(pdfUrl, api.defaults.baseURL).href;
+};
+
 function Lessons() {
   const [lessons, setLessons] = useState([]);
   const [selectedLessonId, setSelectedLessonId] = useState("");
@@ -38,7 +48,7 @@ function Lessons() {
     lessons.find((lesson) => getPdfUrl(lesson));
 
   const selectedPdfUrl = selectedLesson
-    ? getPdfUrl(selectedLesson)
+    ? getAbsolutePdfUrl(selectedLesson)
     : "";
 
   return (
