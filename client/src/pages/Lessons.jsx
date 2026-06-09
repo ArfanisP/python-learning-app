@@ -9,20 +9,14 @@ const getPdfUrl = (lesson) => {
     typeof possibleUrl === "string" &&
     possibleUrl.toLowerCase().includes(".pdf")
   ) {
-    return possibleUrl;
+    if (possibleUrl.startsWith("http")) {
+      return possibleUrl;
+    }
+
+    return `http://localhost:3001${possibleUrl}`;
   }
 
   return "";
-};
-
-const getAbsolutePdfUrl = (lesson) => {
-  const pdfUrl = getPdfUrl(lesson);
-
-  if (!pdfUrl) {
-    return "";
-  }
-
-  return new URL(pdfUrl, api.defaults.baseURL).href;
 };
 
 function Lessons() {
@@ -48,7 +42,7 @@ function Lessons() {
     lessons.find((lesson) => getPdfUrl(lesson));
 
   const selectedPdfUrl = selectedLesson
-    ? getAbsolutePdfUrl(selectedLesson)
+    ? getPdfUrl(selectedLesson)
     : "";
 
   return (
